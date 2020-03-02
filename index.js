@@ -1,7 +1,7 @@
 const inquirer = require ("inquirer");
 const axios = require ("axios");
 const fs = require ("fs");
-const generate = require("./generate");
+// const generate = require("./generate");
 
 inquirer
     .prompt([{
@@ -38,18 +38,46 @@ inquirer
         type: "input",
         message: "How to test app?",
         name: "tests"
-    },{
-        type: "input",
-        message: "Any questions",
-        name: "questions"
-    }]).then(function(response) {
+    },]).then(function(response) {
         const queryURL = `https://api.github.com/users/${response.name}`;
-        let info = response
         axios.get(queryURL).then(function(data) {
             const profilePic = data.avatar_url;
             // const email = data.
 
-            let readMeFile = generate(name, profilePic, info);
+            const readMeFile = `
+            #${response.title}
+
+            ## Description
+            ${response.description}
+            Made by ${response.name}
+
+            ## Table of Contents
+                [Install](#Install)
+                [Usage](#Usage)
+                [License](#Liscense)
+                [Contributors](#Contributors)
+                [Tests](#Tests)
+                [Questions](#Questions)
+
+            ## Install
+            ${response.install}
+
+            ## Usage
+            ${response.usage}
+
+            ## License
+            ${response.license}
+
+            ## Contributors
+            ${response.contributors}
+
+            ## Tests
+            ${response.tests}
+
+            ## Questions
+            Contact ${response.name} at EMAIL GOES HERE.
+            `
+
             fs.writeFile("README.md", readMeFile, function(err) {
                 if (err) {
                     throw err;
