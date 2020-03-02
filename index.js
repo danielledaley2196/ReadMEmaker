@@ -45,12 +45,13 @@ inquirer
     }]).then(function(response) {
         const queryURL = `https://api.github.com/users/${response.name}`;
         axios.get(queryURL).then(function(data) {
-            const profilePic = data.avatar_url;
+            const profilePic = response.avatar_url;
             // const email = data.
 
             const readMeFile = `
             #${response.title}
             Made by ${response.realName}
+            ${profilePic}
 
             ## Description
             ${response.description}
