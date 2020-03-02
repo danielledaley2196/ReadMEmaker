@@ -44,9 +44,19 @@ inquirer
         name: "questions"
     }]).then(function(response) {
         const queryURL = `https://api.github.com/users/${response.name}`;
-
+        let info = response
         axios.get(queryURL).then(function(data) {
             const profilePic = data.avatar_url;
-            const email = data.
-        })
-    })
+            // const email = data.
+
+            let readMeFile = generate(name, profilePic, info);
+            fs.writeFile("README.md", readMeFile, function(err) {
+                if (err) {
+                    throw err;
+                }
+                else {
+                    console.log("README made!!!")
+                }
+            });
+        });
+    });
