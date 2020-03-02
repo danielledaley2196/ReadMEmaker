@@ -43,5 +43,10 @@ inquirer
         message: "Any questions",
         name: "questions"
     }]).then(function(response) {
-        
+        const queryURL = `https://api.github.com/users/${response.name}`;
+
+        axios.get(queryURL).then(function(data) {
+            const profilePic = data.avatar_url;
+            const email = data.
+        })
     })
