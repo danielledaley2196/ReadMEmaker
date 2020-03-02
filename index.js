@@ -38,7 +38,11 @@ inquirer
         type: "input",
         message: "How to test app?",
         name: "tests"
-    },]).then(function(response) {
+    },{
+        type: "input",
+        message: "What is your real name?",
+        name: "realName"
+    }]).then(function(response) {
         const queryURL = `https://api.github.com/users/${response.name}`;
         axios.get(queryURL).then(function(data) {
             const profilePic = data.avatar_url;
@@ -46,10 +50,10 @@ inquirer
 
             const readMeFile = `
             #${response.title}
+            Made by ${response.realName}
 
             ## Description
             ${response.description}
-            Made by ${response.name}
 
             ## Table of Contents
                 [Install](#Install)
